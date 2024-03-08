@@ -2,7 +2,7 @@
 gdextension uBASIC-Godot
 
 a first picture:    
-![Pic1](gdextension-uBASIC-Godot/firstpic.JPG)
+![Pic1](gdextension-uBASIC-Godot/blob/main/firstpic.JPG)
 
 yet another example for gdextension. imho i think theres still not enough documentation for gdextension.    
 im interested in interpreters and i found Adam Dunkels uBASIC (you can find on github, too).   
