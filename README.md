@@ -8,7 +8,19 @@ yet another example for gdextension. imho i think theres still not enough docume
 im interested in interpreters and i found Adam Dunkels uBASIC (you can find on github, too).   
 a cool oldschool basicinterpreter. for example variables have only one letter lowercase a-z, means only 26 variables.    
 i inject uBASIC with gdextension to godot as a node. i pimped some things for godot like change from printf to godots print.    
-programmed for windows with godot 4.2.1 godot-cpp. if build in for example linux you have to expand some files like UBASICGODOT.gdextension...    
+programmed for windows with godot 4.2.1 godot-cpp. if build in for example linux you have to expand some files like UBASICGODOT.gdextension...   
+the basic-program test.bas produces the output you see in the pic:    
+5 print "hello world from uBasic-Godot"    
+10 gosub 100    
+20 for i = 1 to 3    
+30 print i;    
+40 next i    
+45 print "3*2+4="    
+46 print 3*2+4    
+50 print "end"    
+60 end    
+100 print "subroutine"    
+110 return;    
 
 
 # usage:   
