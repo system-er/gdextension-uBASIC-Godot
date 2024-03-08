@@ -5,7 +5,7 @@ a first picture:
 ![Pic1](firstpic.JPG)
 
 yet another example for gdextension. imho i think theres still not enough documentation for gdextension.    
-im interested in interpreters and i found Adam Dunkels uBASIC (you can find on github, too).   
+im interested in interpreters and i found uBASIC (you can find on github, too).   
 a cool oldschool basicinterpreter. for example variables have only one letter lowercase a-z, means only 26 variables.    
 i inject uBASIC with gdextension to godot as a node. i pimped some things for godot like change from printf to godots print.    
 now it will be possible to pimp the basic with some godot-specific-commands - im still thinking ...    
