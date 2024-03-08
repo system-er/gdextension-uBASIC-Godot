@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b82fdkixj35ts"]
+
+[node name="Node" type="Node"]
+
+[node name="UBASICGODOT" type="UBASICGODOT" parent="."]
+programname = "test.bas"
