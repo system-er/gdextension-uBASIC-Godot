@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ck647yvb7rvhm"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="UBASICGODOT" type="UBASICGODOT" parent="."]
+programname = "test.bas"
