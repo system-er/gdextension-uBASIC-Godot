@@ -81,6 +81,11 @@ static const struct keyword_token keywords[] = {
   {"peek", TOKENIZER_PEEK},
   {"poke", TOKENIZER_POKE},
   {"end", TOKENIZER_END},
+  // extend for godot
+  {"node", TOKENIZER_NODE},
+  {"setcolor", TOKENIZER_SETCOLOR},
+  {"setwidth", TOKENIZER_SETWIDTH},
+  {"drawline", TOKENIZER_DRAWLINE},
   {NULL, TOKENIZER_ERROR}
 };
 
@@ -231,7 +236,8 @@ void tokenizer_next(void)
   return;
 }
 /*---------------------------------------------------------------------------*/
-VARIABLE_TYPE tokenizer_num(void)
+//VARIABLE_TYPE tokenizer_num(void)
+int tokenizer_num(void)
 {
   return atoi(ptr);
 }
@@ -282,3 +288,4 @@ int tokenizer_node_num(void)
 {
   return *ptr - 'A';
 }
+/*---------------------------------------------------------------------------*/

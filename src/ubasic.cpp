@@ -36,30 +36,24 @@
 // 05.03.2024: changed printf to godot print
 
 
-//#define DEBUG 0
-//#if DEBUG
-//#define DEBUG_PRINTF(...)  printf(__VA_ARGS__)
-//#else
-//#define DEBUG_PRINTF(...)
-//#endif
+#define DEBUG 0
+
+#if DEBUG
+#define DEBUG_PRINTF(...)  printf(__VA_ARGS__)
+#else
+#define DEBUG_PRINTF(...)
+#endif
 
 
 #include <godot_cpp/variant/utility_functions.hpp>
 #include "ubasic.h"
 #include "tokenizer.h"
-#include <vector>
+//#include <vector>
 
 #include <stdio.h> /* printf() */
 #include <stdlib.h> /* exit() */
 
 using namespace godot;
-
-#define DEBUG 0
-#if DEBUG
-#define DEBUG_PRINTF(...)  UtilityFunctions::print(__VA_ARGS__)
-#else
-#define DEBUG_PRINTF(...)
-#endif
 
 static char const *program_ptr;
 #define MAX_STRINGLEN 40
@@ -89,7 +83,14 @@ struct line_index *line_index_current = NULL;
 #define MAX_VARNUM 26
 static VARIABLE_TYPE variables[MAX_VARNUM];
 // extended for godot
-std::vector<Node> nodevector;
+std::vector<godot::Node> nodevector;
+godot::Color drawcolor;
+int drawwidth;
+//struct linepoint {
+//  float start;
+//  float end;
+//};
+std::vector<lines> linevector;
 
 static int ended;
 
@@ -104,15 +105,14 @@ poke_func poke_function = NULL;
 
 /*---------------------------------------------------------------------------*/
 void ubasic_init(const char *program, godot::Node thisn, godot::Node parentn)
-//void ubasic_init(godot::String program, godot::Node thisn, godot::Node parentn)
 {
   program_ptr = program;
   for_stack_ptr = gosub_stack_ptr = 0;
   index_free();
   tokenizer_init(program);
   ended = 0;
-  UtilityFunctions::print("thisnode: ", thisn.to_string());
-  UtilityFunctions::print("parentnode: ", parentn.to_string());
+  UtilityFunctions::print(thisn.to_string());
+  UtilityFunctions::print(parentn.to_string());
   nodevector.push_back(thisn);
   nodevector.push_back(parentn);
 }
@@ -435,7 +435,6 @@ static void let_statement(void)
   int nodenr;
 
   switch(tokenizer_token()) {
-
     case TOKENIZER_VARIABLE:
       var = tokenizer_variable_num();
       accept(TOKENIZER_VARIABLE);
@@ -449,15 +448,12 @@ static void let_statement(void)
       nodenr = tokenizer_node_num();
       accept(TOKENIZER_NODE);
       accept(TOKENIZER_EQ);
-      accept(TOKENIZER_GETNODE);
-      tokenizer_string(string, sizeof(string));
-      NodePath np = NodePath(string);
-      nodevector.insert(nodenr, get_node_or_null(np));
-      UtilityFunctions::print("getnode node:", nodevector[nodenr].to_string());
+      accept(TOKENIZER_GETPARENT);
+      //nodevector.insert(nodenr, thisnode.get_parent());
+      */
       DEBUG_PRINTF("let_statement TOKENIZER_NODE" );
       accept(TOKENIZER_CR);
       break;
-*/
     default:
 
       break;
@@ -575,6 +571,73 @@ static void poke_statement(void)
   poke_function(poke_addr, value);
 }
 /*---------------------------------------------------------------------------*/
+// extend for godot
+static void setcolor_statement(void)
+{
+  int c1, c2, c3;
+  accept(TOKENIZER_SETCOLOR);
+
+  c1 = tokenizer_num();
+  accept(TOKENIZER_NUMBER);
+  c2 = tokenizer_num();
+  accept(TOKENIZER_NUMBER);
+  c3 = tokenizer_num();
+  accept(TOKENIZER_NUMBER);
+
+  drawcolor = Color((float)c1/255, (float)c2/255, (float)c3/255);
+  //tokenizer_next();
+  DEBUG_PRINTF("setcolor_statement color=", drawcolor, "\n");
+  accept(TOKENIZER_CR);
+  //UtilityFunctions::print("setcolor_statement color=", drawcolor, "\n");
+}
+/*---------------------------------------------------------------------------*/
+// extend for godot
+static void setwidth_statement(void)
+{
+  int w;
+  accept(TOKENIZER_SETWIDTH);
+
+  w = tokenizer_num();
+  accept(TOKENIZER_NUMBER);
+
+  drawwidth = w;
+  //tokenizer_next();
+  DEBUG_PRINTF("setwidth_statement width=", drawwidth, "\n");
+  accept(TOKENIZER_CR);
+  //UtilityFunctions::print("setcolor_statement color=", drawcolor, "\n");
+}
+/*---------------------------------------------------------------------------*/
+static void drawline_statement(void)
+{
+  int startx, starty, endx, endy;
+
+  accept(TOKENIZER_DRAWLINE);
+
+  startx = tokenizer_num();
+  accept(TOKENIZER_NUMBER);
+  starty = tokenizer_num();
+  accept(TOKENIZER_NUMBER);
+  endx = tokenizer_num();
+  accept(TOKENIZER_NUMBER);
+  endy = tokenizer_num();
+  accept(TOKENIZER_NUMBER);
+  
+  lines l1;
+  l1.startx=(real_t)startx;
+  l1.starty=(real_t)starty;
+  l1.endx = (real_t)endx;
+  l1.endy = (real_t)endy;
+  l1.color = drawcolor;
+  l1.width = drawwidth;
+  //UtilityFunctions::print("drawline_statement ", startx, " ",starty, " ", endx, " ", endy, "\n");
+  
+  linevector.push_back(l1);
+  DEBUG_PRINTF("drawline_statement \n");
+
+  accept(TOKENIZER_CR);
+  
+}
+/*---------------------------------------------------------------------------*/
 static void end_statement(void)
 {
   accept(TOKENIZER_END);
@@ -623,6 +686,16 @@ static void statement(void)
     /* Fall through. */
   case TOKENIZER_VARIABLE:
     let_statement();
+    break;
+  // extend for godot
+  case TOKENIZER_SETCOLOR:
+    setcolor_statement();
+    break;
+  case TOKENIZER_SETWIDTH:
+    setwidth_statement();
+    break;
+  case TOKENIZER_DRAWLINE:
+    drawline_statement();
     break;
   default:
     DEBUG_PRINTF("ubasic.c: statement(): not implemented %d\n", token);
@@ -687,5 +760,15 @@ Node ubasic_get_node(int varnum)
         return nodevector.at(varnum);
     }
     return nodevector.at(0);
+}
+/*---------------------------------------------------------------------------*/
+int ubasic_get_width()
+{
+  return drawwidth;
+}
+/*---------------------------------------------------------------------------*/
+std::vector<lines> ubasic_get_lines()
+{
+  return linevector;
 }
 /*---------------------------------------------------------------------------*/

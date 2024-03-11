@@ -33,21 +33,30 @@
 #include "vartype.h"
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/godot.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/classes/node2d.hpp>
+#include <vector>
 
 
 typedef VARIABLE_TYPE (*peek_func)(VARIABLE_TYPE);
 typedef void (*poke_func)(VARIABLE_TYPE, VARIABLE_TYPE);
 
 void ubasic_init(const char *program, godot::Node thisn, godot::Node parentn);
-//void ubasic_init(godot::String program, godot::Node thisn, godot::Node parentn);
 void ubasic_run(void);
 int ubasic_finished(void);
 
 VARIABLE_TYPE ubasic_get_variable(int varnum);
 void ubasic_set_variable(int varnum, VARIABLE_TYPE value);
 
-//godot::Node ubasic_get_node(int varnum);
-//void ubasic_set_node(int varnum, godot::Node nvalue);
+struct lines {
+  float startx, starty, endx, endy;
+  godot::Color color;
+  int width;
+};
+//std::vector<linepoint> linevector;
+int ubasic_get_width();
+std::vector<lines> ubasic_get_lines();
 
 #endif /* __UBASIC_H__ */

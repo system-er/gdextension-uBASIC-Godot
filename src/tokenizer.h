@@ -75,13 +75,17 @@ enum {
   TOKENIZER_CR,
   // extend for Godot
   TOKENIZER_NODE,
+  TOKENIZER_SETCOLOR,
+  TOKENIZER_SETWIDTH,
+  TOKENIZER_DRAWLINE,
 };
 
 void tokenizer_goto(const char *program);
 void tokenizer_init(const char *program);
 void tokenizer_next(void);
 int tokenizer_token(void);
-VARIABLE_TYPE tokenizer_num(void);
+//VARIABLE_TYPE tokenizer_num(void);
+int tokenizer_num(void);
 int tokenizer_variable_num(void);
 void tokenizer_string(char *dest, int len);
 
