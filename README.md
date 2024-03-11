@@ -8,8 +8,7 @@ yet another example for gdextension. imho i think theres still not enough docume
 im interested in interpreters and i found uBASIC (you can find on github, too).   
 a cool oldschool basicinterpreter. for example variables have only one letter lowercase a-z, means only 26 variables.    
 i inject uBASIC with gdextension to godot as a node. i pimped some things for godot like change from printf to godots print.    
-now it will be possible to pimp the basic with some godot-specific-commands - im still thinking ...    
-programmed in c++ for windows with godot 4.2.1 godot-cpp.    
+ programmed in c++ for windows with godot 4.2.1 godot-cpp.    
 the basic-program test.bas produces the output you see in the pic:    
 
 5 print "hello world from uBasic-Godot"    
@@ -23,6 +22,16 @@ the basic-program test.bas produces the output you see in the pic:
 60 end    
 100 print "subroutine"    
 110 return;    
+
+
+# usage:   
+some first godot-specific-commands, i extended (look basictest/test.bas exampleprogram):
+
+drawing lines
+setwidth number - set the linewidth for example 1    
+setcolor number number number - set the drawcolor for examle blue 0 0 255    
+drawline number number number number - draw a line from startx, starty to endx, endy    
+
 
 
 # usage:   
