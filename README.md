@@ -24,10 +24,10 @@ the basic-program test.bas produces the output you see in the pic:
 110 return;    
 
 
-# usage:   
-some first godot-specific-commands, i extended (look basictest/test.bas exampleprogram):
+# godot-specific-commands:   
+some first godot-specific-commands, i extended (look basictest/test.bas exampleprogram).    
 
-drawing lines
+drawing lines:    
 setwidth number - set the linewidth for example 1    
 setcolor number number number - set the drawcolor for examle blue 0 0 255    
 drawline number number number number - draw a line from startx, starty to endx, endy    
