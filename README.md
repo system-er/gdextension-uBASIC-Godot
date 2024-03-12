@@ -7,7 +7,7 @@ a first picture:
 yet another example for gdextension. imho i think theres still not enough documentation for gdextension.    
 im interested in interpreters and i found [Adam Dunkels uBASIC](https://github.com/adamdunkels/ubasic). a cool oldschool basicinterpreter.       
 i inject uBASIC with gdextension to godot as a node. programmed in c++ for windows, tested with 4.3.dev4.    
-and we found [UBASIC-PLUS](https://github.com/mkostrun/UBASIC-PLUS). from there we will borrow some good parts...    
+and we found [Marijan Kostruns UBASIC-PLUS](https://github.com/mkostrun/UBASIC-PLUS). from there maybe we will borrow some good parts...    
 the basic-program test.bas produces the output you see in the pic:   
 
 5 print "hello world from uBASIC-Godot"    
