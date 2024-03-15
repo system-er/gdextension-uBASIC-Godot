@@ -53,7 +53,3 @@ you can write own programs with texteditor of your choice.
 for build, you have to insert godot-cpp, follow the gdextension-example in godot-docs    
 if you build it for example for linux you have to expand some files like UBASICGODOT.gdextension...    
 
-
-# contact:    
-sys_temerror@web.de    
-before pullrequest/merging please contact me and talk with me...    
