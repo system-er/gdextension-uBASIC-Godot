@@ -32,7 +32,7 @@ the basic-program test.bas produces the output you see in the pic:
 
 
 # godot-specific-commands:   
-some first godot-specific-commands, i extended (look basictest/test.bas exampleprogram).    
+godot-specific-commands, i extended (look basictest/test.bas exampleprogram).    
 
 drawing lines:    
 setwidth number - set the linewidth for example 1    
